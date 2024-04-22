@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>所有外送訂單資料</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+	<style>
+		.table {
+			white-space: nowrap;
+			}
+	</style>	
+</head>
+<body>
+    <div class="center">
+        <h2>外送訂單管理</h2>
+    </div>
+    <table class="table"></table>
+
+<script>
+	    $(function() {
+	        // 加載外送訂單資料到表格中
+	        $.ajax({
+	            url: '/delivery/findall', 
+	            type: 'GET',
+	            dataType: 'json',
+	            success: function(data) {
+	                $('.table').DataTable({
+	                    "data": data,
+	                    "columns": [
+	                        { data: 'id', title: "外送編號" },
+	                        { data: 'cname', title: "顧客姓名" },
+	                        { data: 'phone', title: "電話" },
+	                        { data: 'product', title: "產品" },
+	                        { data: 'num', title: "數量" },
+	                        { data: 'price', title: "價格" },
+	                        { data: 'ename', title: "外送員" },
+	                        { data: 'address', title: "外送地址" },
+	                        { data: 'time', title: "外送時間" },
+	                        {
+	                            // 刪除按鈕列
+	                            title: "刪除",
+	                            render: function(data, type, row) {
+	                                return '<button onclick="Delete(' + row.id + ')">刪除</button>';
+	                            }
+	                        }
+	                    ]
+	                });
+	            },
+	            error: function(xhr, status, error) {
+	                console.error(status, error);
+	                alert('獲取外送訂單資料失敗！');
+	            }
+	        });
+	    });
+
+         // 刪除外送訂單的函數
+         function Delete(deliveryId) {
+	            if (confirm('確定要刪除外送編號 ' + deliveryId + ' 的訂單嗎？')) {
+	                $.ajax({
+	                    url: '/delivery/del/' + deliveryId,
+	                    type: 'DELETE',
+	                    success: function(response) {
+	                        alert('成功刪除外送編號 ' + deliveryId + ' 的訂單！');
+	                        location.reload();
+	                    },
+	                    error: function(xhr, status, error) {
+	                        console.error('刪除失敗:', error);
+	                        alert('刪除失敗！請重試。');
+	                    }
+	                });
+	            }
+	        }
+</script>
+
+</body>
+</html>

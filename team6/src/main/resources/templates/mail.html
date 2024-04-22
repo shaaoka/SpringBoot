@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>java mail</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    .mb-3 {
+        max-width: 400px; /* 根據需要調整最大寬度 */
+        margin: 0 auto; /* 將元素置中 */
+    }
+</style>
+
+</head>
+<body>
+    <h2> Mail </h2>
+    <div class="mb-3">
+        <label for="to" class="form-label">顧客信箱:</label>
+        <input type="text" class="form-control" id="to" name="to" value="@gmail.com" required>
+    </div>
+    <div class="mb-3">
+        <label for="subject" class="form-label">主題:</label>
+        <input type="text" class="form-control" id="subject" name="subject" required>
+    </div>
+	<div class="mb-3">
+	    <label for="subject" class="form-label">內容:</label>
+	    <textarea class="form-control" id="text" name="text" required></textarea>
+	</div>
+    <!-- <button onclick="generateJSON()">產生 JSON</button> -->
+		<button onclick="sendEmail()">Send</button>
+    
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    function sendEmail() {
+        // 取得表單元素的值
+        var to = document.getElementById("to").value;
+        var subject = document.getElementById("subject").value;
+        var text = document.getElementById("text").value;
+    
+         // 建立 JSON 物件
+         var formData = {
+            "to": to,
+            "subject": subject,
+            "text": text
+        };
+        // 轉換成 JSON 字串
+        var jsonData = JSON.stringify(formData);
+       
+	     $.ajax({
+	        type: 'POST',
+	        url:'/sendEmail',
+            dataType : formData,
+	        success: function(result) {
+                    window.location.href = 'delivery/findall';
+	        },
+	    })
+
+        // 顯示 JSON 資料
+        console.log(jsonData);
+    }
+    </script>    
+</body>
+</html>

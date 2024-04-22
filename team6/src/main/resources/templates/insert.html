@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>新增外送訂單</title>
+<style>
+body {
+	text-align: center;
+	background-color : #fdf5e6;
+}
+
+.form {
+	display: inline-block
+}
+
+button {
+	margin:5px
+}
+	
+</style>
+</head>
+<body>
+
+<div align="center" class="container mt-5">
+  <h2>新增外送訂單</h2>
+  <form  action="/delivery/insert" method="post">
+   <table>
+  	<tr>
+    <td>顧客姓名
+    <td><input id=cname type="text" name="cname" value=""  required/>
+   	<tr>
+   	<td>電話
+    <td><input id=phone type="text" name="phone" value="" pattern="[0]{1}[2-9]{1}[0-9]{8}" required/>
+  	<tr>
+    <td>產品
+    <td>
+    <select name="product" id="product" required> 
+	    <option value="夏威夷德國披薩">夏威夷德國披薩</option>
+	    <option value="海鮮德國披薩">海鮮德國披薩</option>
+	    <option value="牛肉k吧德國披薩">牛肉k吧德國披薩</option>
+	    <option value="義大利雞肉焗烤麵">義大利雞肉焗烤麵</option>
+	    <option value="牛肉k吧焗烤薯條">牛肉k吧焗烤薯條</option>
+	    <option value="炸物拼盤">炸物拼盤</option>
+	    <option value="蘋果肉桂德國烤餅">蘋果肉桂德國烤餅</option>
+	    <option value="原味布丁">原味布丁</option>
+	    <option value="可口可樂">可口可樂</option>
+	</select>
+	<tr>
+   	<td>數量
+    <td><input type="text" id="num"  name="num" value="1" min=1 max=10/>
+	<tr>
+   	<td>價格
+    <td><input type="text" id="price" name="price" value="" />
+  	<tr>
+    <td>外送員工
+    <td>
+    <select id="ename" 	name="ename">
+	    <option value="Henry">Henry</option>
+	    <option value="Allen">Allen</option>
+	    <option value="David">David</option>
+	    <option value="John">John</option>
+    </select>
+	<tr>
+   	<td>地址
+   	<td>
+   	<select name="address" id="address">
+	    <option value="中原大學">中原大學</option>
+	    <option value="健行科技大學">健行科技大學</option>
+	    <option value="中壢運動園區">中壢運動園區</option>
+	    <option value="中壢火車站">中壢火車站</option>
+	    <option value="內壢火車站">內壢火車站</option>
+	    <option value="家樂福中壢店">家樂福 中壢店</option>
+	    <option value="家樂福內壢店">家樂福 內壢店</option>
+	    <option value="桃園市立龍興國民中學">桃園市立龍興國民中學</option>
+	    <option value="莒光環保公園">莒光環保公園</option>
+	    <option value="天晟醫院">天晟醫院</option>
+    </select>
+   	<tr>
+    <td>外送時間
+   	<td><input type="text" id="time" name="time" value="" />
+  	</table>
+   	<button type="submit" value="send">送出</button>
+ </form>
+ 	<button id="home">返回</button>
+	<button id="ClickButton">一鍵輸入</button>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script>
+	$('#ClickButton').click(function() {
+    		$('#cname').val('浩然');
+    		$('#phone').val('0912345678');
+        	$('#num').val('1');
+    		$('#price').val('230');
+    		$('#time').val('10');
+		});
+	 
+	 $("#home").click(function(){
+		    let homeURL = "http://localhost:8080/delivery/findall";
+		    window.location.href = homeURL;
+		});
+			
+</script>
+</body>
+</html>
